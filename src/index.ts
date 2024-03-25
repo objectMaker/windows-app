@@ -33,7 +33,7 @@ const createWindow = (): void => {
   ipcMain.on('minimize', () => {
       mainWindow.minimize();
   });
-  
+
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   mainWindow.setMinimizable(true);
@@ -49,7 +49,9 @@ const createWindow = (): void => {
 
   tray.setToolTip('touch fish')
   tray.setContextMenu(contextMenu)
-  tray.on('click', mainWindow.restore)
+  tray.on('click', ()=>{
+    mainWindow.restore()
+  })
 
 };
 

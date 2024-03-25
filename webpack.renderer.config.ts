@@ -10,7 +10,17 @@ rules.push({
 
 export const rendererConfig: Configuration = {
   module: {
-    rules,
+    rules:[...rules,
+      {
+      test: /\.css$/,
+      use: [
+        { loader: "style-loader" },
+        { loader: "css-loader" },
+        { loader: "postcss-loader" },
+      ],
+    },
+  ]
+    
   },
   plugins,
   resolve: {
