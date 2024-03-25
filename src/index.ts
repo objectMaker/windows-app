@@ -28,15 +28,12 @@ const createWindow = (): void => {
   });
 
   ipcMain.on('close-app', () => {
-    setTimeout(() => {
       app.quit();
-    }, 300);
   });
   ipcMain.on('minimize', () => {
-    setTimeout(() => {
       mainWindow.minimize();
-    }, 100);
   });
+  
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   mainWindow.setMinimizable(true);
@@ -49,11 +46,10 @@ const createWindow = (): void => {
     { label: 'Item3', type: 'radio', checked: true },
     { label: 'Item4', type: 'radio' }
   ])
-  tray.setToolTip('This is my application.')
+
+  tray.setToolTip('touch fish')
   tray.setContextMenu(contextMenu)
-  tray.on('click', () => {
-    mainWindow.restore()
-  })
+  tray.on('click', mainWindow.restore)
 
 };
 
