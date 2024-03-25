@@ -42,8 +42,19 @@ const createWindow = (): void => {
   mainWindow.setMinimizable(true);
   mainWindow.setIcon(path.join(__dirname, '../../static/icons/main.png'));
 
+  const tray = new Tray(path.join(__dirname, '../../static/icons/main.png'))
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Item1', type: 'radio' },
+    { label: 'Item2', type: 'radio' },
+    { label: 'Item3', type: 'radio', checked: true },
+    { label: 'Item4', type: 'radio' }
+  ])
+  tray.setToolTip('This is my application.')
+  tray.setContextMenu(contextMenu)
+  tray.on('click', () => {
+    mainWindow.restore()
+  })
 
-  
 };
 
 // This method will be called when Electron has finished
@@ -68,17 +79,5 @@ app.on('activate', () => {
   }
 });
 
-let tray = null
-app.whenReady().then(() => {
-  tray = new Tray(path.join(__dirname, '../../static/icons/main.png'))
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' }
-  ])
-  tray.setToolTip('This is my application.')
-  tray.setContextMenu(contextMenu)
-})
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
