@@ -3,8 +3,8 @@ import CloseButton from './components/CloseButton';
 import './index.css'
 const root = createRoot(document.getElementById('root'));
 root.render(<>
-  <h1 className="text-3xl font-bold underline text-green-300">
+  <div className="text-3xl font-bold underline text-green-300">
     Hello world!
-  </h1>
+  </div>
     <CloseButton/>
 </>);
