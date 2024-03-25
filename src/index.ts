@@ -15,9 +15,9 @@ const createWindow = (): void => {
     width: 500,
     height: 500,
     type: 'toolbar', // 使用toolbar类型使窗口浮动
-    frame: true, // 无边框，这样可以自定义窗口的外观
-    resizable: true, // 不可调整大小
-    alwaysOnTop: true, // 保持在顶部
+    frame: false, // 无边框，这样可以自定义窗口的外观
+    resizable: false, // 不可调整大小
+    alwaysOnTop: false, // 保持在顶部
     transparent: true, // 透明背景，这样可以看到后面的内容
     webPreferences: {
       nodeIntegration: true, // 允许在窗口中使用Node.js
@@ -29,6 +29,11 @@ const createWindow = (): void => {
     setTimeout(() => {
       app.quit();
     }, 300);
+  });
+  ipcMain.on('minimize', () => {
+    setTimeout(() => {
+      mainWindow.minimize();
+    }, 100);
   });
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
