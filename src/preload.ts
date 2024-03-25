@@ -3,10 +3,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 //@ts-ignore
 const { contextBridge, ipcRenderer } = require('electron');
-
 contextBridge.exposeInMainWorld('electron', {
-  ipcRenderer,
-  //ts-ignore
   ipcRendererSend: function (channel, data) {
     ipcRenderer.send(channel, data);
   }
