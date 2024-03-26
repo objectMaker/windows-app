@@ -8,6 +8,7 @@ export default function(mainWindow: Electron.BrowserWindow){
     ipcMain.on('minimize', () => {
         mainWindow.minimize();
     });
+    //注册事件
     ipcMain.on('open-folder', openFolderDialog);
     
     

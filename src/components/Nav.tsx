@@ -1,5 +1,5 @@
 const {ipcRendererSend,onGetFileList} = (window as any).electron
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 // const { ipcRenderer } = window.require("electron");
 
   function handleClose() {
@@ -17,11 +17,12 @@ import {useState} from 'react'
 export default function Nav(){
   const [fileList, setFileList] = useState('')
 
-  onGetFileList('get-file-list',(_event:any, value:any) => {
-    console.log(_event,'eve')
-    console.log(value,'ev')
-    setFileList(value)
-  })
+  useEffect(()=>{
+    //初次进来注册事件，只会执行一次注册
+    onGetFileList('get-file-list',(_event:any, value:any) => {
+      setFileList(value)
+    })
+  },[])
     return (
         <>
         <div className='flex flex-row h-3 item w-full justify-end'>
