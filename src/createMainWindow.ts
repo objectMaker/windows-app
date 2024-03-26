@@ -15,6 +15,7 @@ export  function createMainWindow (){
             alwaysOnTop: false, // 保持在顶部
             transparent: true, // 透明背景，这样可以看到后面的内容
             webPreferences: {
+              webSecurity:false,
               nodeIntegration: true, // 允许在窗口中使用Node.js
               preload:MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             },

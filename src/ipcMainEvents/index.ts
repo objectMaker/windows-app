@@ -1,5 +1,4 @@
 import { app, dialog, ipcMain } from 'electron';
-import fs from 'fs'
 
 export default function(mainWindow: Electron.BrowserWindow){
     ipcMain.on('close-app', () => {
@@ -31,7 +30,9 @@ export default function(mainWindow: Electron.BrowserWindow){
             //   } catch (err) {
             //     console.error(err);
             //   }
-                mainWindow.webContents.send('get-file-list', result.filePaths[0]+'\\1.mp3');
+            //把字符串 \\ 转化为 /
+            const filePath = result.filePaths[0].replace(/\\/g, '/');
+                mainWindow.webContents.send('get-file-list', filePath+'/1.mp3');
 
           }
         }).catch(err => {

@@ -23,7 +23,7 @@ export default function Nav(){
     onGetFileList('get-file-list',async (_event:any, value:any) => {
       const setV = 'atom:///' + value
       console.log(setV)
-      setFileList('atom:///C:/Users/yu/Desktop/songs/1.mp3')
+      setFileList(setV)
     })
   },[])
     return (
@@ -33,8 +33,7 @@ export default function Nav(){
             <div className='justify-self-end h-full pr-1.5 pl-1.5 items-center flex cursor-pointer' onClick={()=>handleMinimize()}>-</div>
             <div className='justify-self-end h-full pr-1.5 pl-1.5 items-center flex cursor-pointer' onClick={()=>handleClose()}>x</div>
         </div>
-        <div>{fileList}</div>
-        {fileList && <ReactPlayer url={fileList} playing />}
+        {fileList && <audio controls   src={fileList}/>}
         </>
     )
   }

@@ -14,7 +14,7 @@ contextBridge.exposeInMainWorld('electron', {
         
       // }
       // 如果想要同步读取，可以使用以下代码
-callback(_event,value)
+        callback(_event,value)
     } )
   },
 });
