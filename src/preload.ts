@@ -10,4 +10,11 @@ contextBridge.exposeInMainWorld('electron', {
   minimize: function (channel, data) {
     ipcRenderer.send(channel, data);
   },
+  onGetFileList: function (channel,callback) {
+    console.log(channel,'channel')
+    console.log(callback,'callback')
+    ipcRenderer.on('get-file-list', (_event, value) => {
+      callback(_event, value+'获取当前文件夹所有内容')
+    } )
+  },
 });

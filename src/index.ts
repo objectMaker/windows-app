@@ -13,8 +13,8 @@ if (require('electron-squirrel-startup')) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 300,
-    height: 150,
+    width: 500,
+    height: 500,
     type: 'toolbar', // 使用toolbar类型使窗口浮动
     frame: false, // 无边框，这样可以自定义窗口的外观
     resizable: false, // 不可调整大小
@@ -54,6 +54,22 @@ const createWindow = (): void => {
     mainWindow.restore()
   })
 
+
+
+  // 当需要弹出文件夹选择对话框时调用此函数
+function openFolderDialog() {
+  dialog.showOpenDialog({
+    properties: ['openDirectory']
+  }).then(result => {
+    if (!result.canceled) {
+      console.log(result.filePaths[0]); // 输出选中的文件夹路径
+      // 你可以将路径发送到渲染进程或执行其他操作
+      mainWindow.webContents.send('get-file-list', result.filePaths[0]);
+    }
+  }).catch(err => {
+    console.error(err);
+  });
+}
 };
 
 // This method will be called when Electron has finished
@@ -82,16 +98,3 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 
-// 当需要弹出文件夹选择对话框时调用此函数
-function openFolderDialog() {
-  dialog.showOpenDialog({
-    properties: ['openDirectory']
-  }).then(result => {
-    if (!result.canceled) {
-      console.log(result.filePaths[0]); // 输出选中的文件夹路径
-      // 你可以将路径发送到渲染进程或执行其他操作
-    }
-  }).catch(err => {
-    console.error(err);
-  });
-}
