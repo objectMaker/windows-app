@@ -13,8 +13,8 @@ if (require('electron-squirrel-startup')) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 500,
-    height: 500,
+    width: 300,
+    height: 150,
     type: 'toolbar', // 使用toolbar类型使窗口浮动
     frame: false, // 无边框，这样可以自定义窗口的外观
     resizable: false, // 不可调整大小
