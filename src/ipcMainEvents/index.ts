@@ -31,7 +31,8 @@ export default function(mainWindow: Electron.BrowserWindow){
             //     console.error(err);
             //   }
             //把字符串 \\ 转化为 /
-            const filePath = result.filePaths[0].replace(/\\/g, '/');
+            // const filePath = result.filePaths[0].replace(/\\/g, '/');
+            const filePath = result.filePaths[0]
                 mainWindow.webContents.send('get-file-list', filePath+'/1.mp3');
 
           }

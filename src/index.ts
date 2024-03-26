@@ -9,6 +9,7 @@ protocol.registerSchemesAsPrivileged([
     privileges: {
       standard: true,
       secure: false,
+      bypassCSP: true,
       supportFetchAPI: true,
       stream:true
     }
