@@ -21,8 +21,13 @@ export default function Nav(){
   useEffect(()=>{
     //初次进来注册事件，只会执行一次注册
     onGetFileList('get-file-list',async (_event:any, value:any) => {
-      const setV = 'atom:///' + value
-      console.log(setV)
+      console.log(value,'value')
+     // 创建一个Blob对象  
+    const audioBlob = new Blob([value], { type: 'audio/wav' }); // 或者使用其他适当的MIME类型  
+    console.log(audioBlob,'audioBlobaudioBlob')
+    console.log(URL.createObjectURL(audioBlob),'URL.createObjectURL(audioBlob)')
+    // 现在你可以使用audioBlob了，比如创建一个URL来播放它  
+    const setV = URL.createObjectURL(audioBlob);  
       setFileList(setV)
     })
   },[])

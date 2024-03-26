@@ -10,7 +10,7 @@ contextBridge.exposeInMainWorld('electron', {
   },
   onGetFileList: function (channel,callback) {
     ipcRenderer.on('get-file-list', (_event, value) => {
-      // fs.readFile(value+'\\1.mp3', 'utf8', function (err, data) {
+      // fs.readFile(value+'\\countStar.mp3', 'utf8', function (err, data) {
         
       // }
       // 如果想要同步读取，可以使用以下代码

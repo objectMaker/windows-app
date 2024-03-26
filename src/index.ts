@@ -8,10 +8,8 @@ protocol.registerSchemesAsPrivileged([
     scheme: 'atom',
     privileges: {
       standard: true,
-      secure: false,
       bypassCSP: true,
       supportFetchAPI: true,
-      stream:true
     }
   }
 ])
