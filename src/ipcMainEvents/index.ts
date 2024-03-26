@@ -1,5 +1,5 @@
 import { app, dialog, ipcMain } from 'electron';
-
+import fs from 'fs'
 
 export default function(mainWindow: Electron.BrowserWindow){
     ipcMain.on('close-app', () => {
@@ -20,7 +20,19 @@ export default function(mainWindow: Electron.BrowserWindow){
           if (!result.canceled) {
             console.log(result.filePaths[0]); // 输出选中的文件夹路径
             // 你可以将路径发送到渲染进程或执行其他操作
-            mainWindow.webContents.send('get-file-list', result.filePaths[0]);
+
+            // try {
+            //     const data = fs.readFileSync(result.filePaths[0]+'\\1.mp3');
+            //     // data是音频文件的Buffer
+            //     console.log('音频文件同步读取成功');
+            //     console.log(data,'data');
+            //     // 处理音频Buffer...
+            //     mainWindow.webContents.send('get-file-list', data);
+            //   } catch (err) {
+            //     console.error(err);
+            //   }
+                mainWindow.webContents.send('get-file-list', result.filePaths[0]+'\\1.mp3');
+
           }
         }).catch(err => {
           console.error(err);

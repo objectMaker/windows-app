@@ -1,5 +1,6 @@
 const {ipcRendererSend,onGetFileList} = (window as any).electron
 import {useEffect, useState} from 'react'
+import ReactPlayer from 'react-player'
 // const { ipcRenderer } = window.require("electron");
 
   function handleClose() {
@@ -19,8 +20,10 @@ export default function Nav(){
 
   useEffect(()=>{
     //初次进来注册事件，只会执行一次注册
-    onGetFileList('get-file-list',(_event:any, value:any) => {
-      setFileList(value)
+    onGetFileList('get-file-list',async (_event:any, value:any) => {
+      const setV = 'atom:///' + value
+      console.log(setV)
+      setFileList('atom:///C:/Users/yu/Desktop/songs/1.mp3')
     })
   },[])
     return (
@@ -31,6 +34,7 @@ export default function Nav(){
             <div className='justify-self-end h-full pr-1.5 pl-1.5 items-center flex cursor-pointer' onClick={()=>handleClose()}>x</div>
         </div>
         <div>{fileList}</div>
+        {fileList && <ReactPlayer url={fileList} playing />}
         </>
     )
   }
