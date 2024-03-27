@@ -13,7 +13,6 @@ export const createWindow = (): void => {
     mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {  
       // 检查并修改响应头中的 Content-Security-Policy  
       const csp = details.responseHeaders['Content-Security-Policy'];  
-      console.log(csp,'csp')
       if (csp) {  
         // 移除现有的 CSP 或添加需要的指令  
         const newCsp = csp[0].replace(/default-src 'self'/, "default-src 'self' blob:");  
@@ -37,9 +36,9 @@ export const createWindow = (): void => {
       console.log(path.join(__dirname, filePath),'paht')
       // return net.fetch(url.pathToFileURL(path.join(__dirname, filePath)).toString())
       console.log('xxxxx')
-      console.log(pathToFileURL('C:/Users/objectMaker/Desktop/songs/countStar.mp3'),'xxx')
-      console.log(pathToFileURL('C:/Users/objectMaker/Desktop/songs/countStar.mp3').toString(),'fdfdsfsd')
-      return net.fetch(pathToFileURL('C:/Users/objectMaker/Desktop/songs/countStar.mp3').toString())
+      console.log(pathToFileURL('C:/Users/objectMaker/Desktop/songs/1.mp3'),'xxx')
+      console.log(pathToFileURL('C:/Users/objectMaker/Desktop/songs/1.mp3').toString(),'fdfdsfsd')
+      return net.fetch(pathToFileURL('C:/Users/objectMaker/Desktop/songs/1.mp3').toString())
     })
 
     const tray = new Tray(path.join(__dirname, '../../static/icons/main.png'))
