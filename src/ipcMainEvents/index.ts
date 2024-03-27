@@ -12,7 +12,9 @@ export default function(mainWindow: Electron.BrowserWindow){
     //注册事件
     ipcMain.on('open-folder', openFolderDialog);
     let timer:NodeJS.Timeout;
+    const [initW,initH] = mainWindow.getSize();
     ipcMain.on('drag',(_,isDrag) => {
+      console.log(initW,initH,'wh')
       if(!isDrag){
         return clearInterval(timer);
       }
@@ -23,17 +25,21 @@ export default function(mainWindow: Electron.BrowserWindow){
      const disX = x-startX; 
      const disY = y-startY; 
      //initWidth height
-     const [initW,initH] = mainWindow.getSize();
+     clearInterval(timer);
+     const {x:clickInitX,y:clickInitY} = screen.getCursorScreenPoint()
     timer = setInterval(()=>{
       const {x,y} = screen.getCursorScreenPoint()
-      // (x-disX,y-disY,false)
+      //点击时触发偏移很小不用移动
+        if(Math.abs(clickInitX-x)<=6 && Math.abs(clickInitY-y)<=6){
+          return;
+      }
       mainWindow.setBounds({
         x:x-disX,
         y:y-disY,
         width:initW,
         height:initH
       })
-      },2);
+      },3);
   })
       // 当需要弹出文件夹选择对话框时调用此函数
       function openFolderDialog() {
