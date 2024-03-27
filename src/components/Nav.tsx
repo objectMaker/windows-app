@@ -1,6 +1,7 @@
 const {ipcRendererSend,onGetFile,onGetFileList} = (window as any).electron
 import {useEffect, useState} from 'react'
 import ReactPlayer from 'react-player'
+import MediaList from './MediaList'
 // const { ipcRenderer } = window.require("electron");
 
   function handleClose() {
@@ -38,7 +39,7 @@ export default function Nav(){
             <div className='justify-self-end h-full pr-1.5 pl-1.5 items-center flex cursor-pointer' onClick={()=>handleClose()}>x</div>
         </div>
         {audioLink && <ReactPlayer  url={audioLink} controls onProgress={handleProgress}/>}
-        {fileList.map(item=><div>{item.name}</div>)}
+        <MediaList fileList={fileList}/>
         </>
     )
   }
