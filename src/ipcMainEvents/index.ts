@@ -1,4 +1,4 @@
-import { app, dialog, ipcMain } from 'electron';
+import { app, dialog, ipcMain,screen } from 'electron';
 import fs from 'fs';
 
 import {getFilesByDirAndFileType} from '../utils'
@@ -11,8 +11,30 @@ export default function(mainWindow: Electron.BrowserWindow){
     });
     //注册事件
     ipcMain.on('open-folder', openFolderDialog);
-    
-    
+    let timer:NodeJS.Timeout;
+    ipcMain.on('drag',(_,isDrag) => {
+      if(!isDrag){
+        return clearInterval(timer);
+      }
+      //如果是拖拽
+     const [startX,startY] = mainWindow.getPosition()
+     const {x,y} = screen.getCursorScreenPoint()
+
+     const disX = x-startX; 
+     const disY = y-startY; 
+     //initWidth height
+     const [initW,initH] = mainWindow.getSize();
+    timer = setInterval(()=>{
+      const {x,y} = screen.getCursorScreenPoint()
+      // (x-disX,y-disY,false)
+      mainWindow.setBounds({
+        x:x-disX,
+        y:y-disY,
+        width:initW,
+        height:initH
+      })
+      },2);
+  })
       // 当需要弹出文件夹选择对话框时调用此函数
       function openFolderDialog() {
         dialog.showOpenDialog({

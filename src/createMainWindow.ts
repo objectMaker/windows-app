@@ -8,7 +8,7 @@ export  function createMainWindow (){
     if(!mainWindow){
       mainWindow =  new BrowserWindow({
             width: 900,
-            height: 900 ,
+            height: 600 ,
             type: 'toolbar', // 使用toolbar类型使窗口浮动
             frame: false, // 无边框，这样可以自定义窗口的外观
             resizable: false, // 不可调整大小

@@ -9,8 +9,6 @@ html,body {
   width: 100%;
   background-color: white;
   overflow: hidden;
-  border-radius: 10px;
-
 }
 ::-webkit-scrollbar {
   width: 5px;
