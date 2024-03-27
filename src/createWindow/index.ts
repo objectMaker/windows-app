@@ -25,13 +25,13 @@ export const createWindow = (): void => {
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
     mainWindow.setMinimizable(true);
-    mainWindow.setIcon(path.join(__dirname, '../../static/icons/main.png'));
+    mainWindow.setIcon('../../static/icons/main.png');
     protocol.handle('atom', (request) => {
       const filePath = request.url.slice('atom://'.length)
       return net.fetch(pathToFileURL(filePath+'/1.mp3').toString())
     })
 
-    const tray = new Tray(path.join(__dirname, '../../static/icons/main.png'))
+    const tray = new Tray('../../static/icons/main.png')
   
     tray.setToolTip('touch fish')
   
