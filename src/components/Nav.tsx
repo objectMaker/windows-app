@@ -1,6 +1,5 @@
 const { ipcRendererSend, onGetFile, onGetFileList } = (window as any).electron
 import { useEffect, useState } from 'react'
-import ReactPlayer from 'react-player'
 import {useContext} from 'react'
 import { GlobalContext } from '../context'
 import Icon from './Icon'
@@ -19,8 +18,8 @@ function handleOpenFolder() {
 
 export default function Nav() {
 
-  const {setFileList} = useContext(GlobalContext);
-  const [audioLink, setAudioLink] = useState('')
+  const {setFileList,setAudioLink} = useContext(GlobalContext);
+
   const [isClick, setClick] = useState(false)
 
   useEffect(() => {
@@ -44,9 +43,6 @@ export default function Nav() {
 
 
 
-  function handleProgress(params: any) {
-    console.log(params, 'params')
-  }
 
 
   //拖动事件处理
@@ -85,7 +81,6 @@ export default function Nav() {
           </svg>
         </Icon>
       </div>
-      {audioLink && <ReactPlayer url={audioLink} controls onProgress={handleProgress} />}
     </>
   )
 }

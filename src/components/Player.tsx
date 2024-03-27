@@ -1,5 +1,16 @@
+import { useContext } from "react";
+import ReactPlayer from 'react-player'
+import { GlobalContext } from "../context";
+
+
+
 export default function player() {
+    function handleProgress(params: any) {
+        console.log(params, 'params')
+      }
+        const {audioLink} = useContext(GlobalContext);
     return <>
+          {audioLink && <ReactPlayer url={audioLink} controls onProgress={handleProgress} />}
         <div className="relative z-10 p-4">
             <div className="flex w-[41rem] rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
                 <div className="flex items-center space-x-4 px-6 py-4">

@@ -3,7 +3,9 @@ import { GlobalContext } from './';
 
 export default function(props:{children:React.ReactNode}){
 	const [fileList,setFileList] = useState([])
-	localStorage.setItem('fileList',JSON.stringify(fileList))
+	const [audioLink, setAudioLink] = useState('')
+
+
 	useEffect(()=>{
 		let fileList:any;
 		try{
@@ -17,7 +19,7 @@ export default function(props:{children:React.ReactNode}){
 		useEffect(()=>{
 		localStorage.setItem('fileList',JSON.stringify(fileList))
 		},[fileList])
-	return <GlobalContext.Provider value={{fileList,setFileList}}>
+	return <GlobalContext.Provider value={{fileList,setFileList,audioLink,setAudioLink}}>
 			{props.children}
 	</GlobalContext.Provider>
 }
