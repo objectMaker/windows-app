@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld('electron', {
   ipcRendererSend: function (channel, data) {
     ipcRenderer.send(channel, data);
   },
-  onGetFileList: function (_,callback) {
-    ipcRenderer.on('get-file-list', (e,v)=>callback(e,v))
+  onGetFile: function (_,callback) {
+    ipcRenderer.on('get-file', (e,v)=>callback(e,v))
   },
 });

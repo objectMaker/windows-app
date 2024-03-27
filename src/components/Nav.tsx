@@ -1,4 +1,4 @@
-const {ipcRendererSend,onGetFileList} = (window as any).electron
+const {ipcRendererSend,onGetFile} = (window as any).electron
 import {useEffect, useState} from 'react'
 import ReactPlayer from 'react-player'
 // const { ipcRenderer } = window.require("electron");
@@ -20,7 +20,7 @@ export default function Nav(){
 
   useEffect(()=>{
     //初次进来注册事件，只会执行一次注册
-    onGetFileList('get-file-list',async (_event:any, value:any) => {
+    onGetFile('get-file',async (_event:any, value:any) => {
     const audioBlob = new Blob([value], { type: 'audio/wav' }); // 或者使用其他适当的MIME类型  
       setAudioLink(URL.createObjectURL(audioBlob))
     })

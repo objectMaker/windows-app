@@ -27,7 +27,7 @@ export default function(mainWindow: Electron.BrowserWindow){
                 const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
                 // data是音频文件的Buffer
                 // 处理音频Buffer...
-                mainWindow.webContents.send('get-file-list', arrayBuffer);
+                mainWindow.webContents.send('get-file', arrayBuffer);
               } catch (err) {
                 console.error(err);
               }
