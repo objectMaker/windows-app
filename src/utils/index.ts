@@ -25,6 +25,5 @@ export  function getFilesByDirAndFileType(dir:string,fileType:string|string[]){
             name:basename+extname
         }
    })
-   
    return dealFiles;
 }

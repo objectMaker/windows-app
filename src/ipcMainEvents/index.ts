@@ -22,11 +22,11 @@ export default function(mainWindow: Electron.BrowserWindow){
             // 你可以将路径发送到渲染进程或执行其他操作
             try {
               const fileDirPath = result.filePaths[0];
-              console.log(getFilesByDirAndFileType(fileDirPath,'mp3'),'xxxx')
+                const fileList = getFilesByDirAndFileType(fileDirPath,'mp3');
+                mainWindow.webContents.send('get-file-list', fileList);
+
                 const buffer = fs.readFileSync(fileDirPath+'\\1.mp3');
                 const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-                // data是音频文件的Buffer
-                // 处理音频Buffer...
                 mainWindow.webContents.send('get-file', arrayBuffer);
               } catch (err) {
                 console.error(err);
