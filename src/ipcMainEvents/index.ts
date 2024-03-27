@@ -1,5 +1,7 @@
 import { app, dialog, ipcMain } from 'electron';
 import fs from 'fs';
+
+import {getFilesByDirAndFileType} from '../utils'
 export default function(mainWindow: Electron.BrowserWindow){
     ipcMain.on('close-app', () => {
         app.quit();
@@ -19,7 +21,9 @@ export default function(mainWindow: Electron.BrowserWindow){
           if (!result.canceled) {
             // 你可以将路径发送到渲染进程或执行其他操作
             try {
-                const buffer = fs.readFileSync(result.filePaths[0]+'\\1.mp3');
+              const fileDirPath = result.filePaths[0];
+              console.log(getFilesByDirAndFileType(fileDirPath,'mp3'),'xxxx')
+                const buffer = fs.readFileSync(fileDirPath+'\\1.mp3');
                 const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
                 // data是音频文件的Buffer
                 // 处理音频Buffer...
