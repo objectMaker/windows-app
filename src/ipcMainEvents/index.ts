@@ -11,6 +11,11 @@ export default function(mainWindow: Electron.BrowserWindow){
     });
     //注册事件
     ipcMain.on('open-folder', openFolderDialog);
+    ipcMain.on('choose-file', (_,filePath)=>{
+      const buffer = fs.readFileSync(filePath);
+      const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+      mainWindow.webContents.send('get-file', arrayBuffer);
+    });
     let timer:NodeJS.Timeout;
     const [initW,initH] = mainWindow.getSize();
     ipcMain.on('drag',(_,isDrag) => {
@@ -52,10 +57,6 @@ export default function(mainWindow: Electron.BrowserWindow){
               const fileDirPath = result.filePaths[0];
                 const fileList = getFilesByDirAndFileType(fileDirPath,'mp3');
                 mainWindow.webContents.send('get-file-list', fileList);
-
-                const buffer = fs.readFileSync(fileDirPath+'\\1.mp3');
-                const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-                mainWindow.webContents.send('get-file', arrayBuffer);
               } catch (err) {
                 console.error(err);
               }

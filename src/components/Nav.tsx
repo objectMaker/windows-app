@@ -1,6 +1,5 @@
 const { ipcRendererSend, onGetFile, onGetFileList } = (window as any).electron
-import { useEffect, useState } from 'react'
-import {useContext} from 'react'
+import { useEffect, useState,useContext } from 'react'
 import { GlobalContext } from '../context'
 import Icon from './Icon'
 // const { ipcRenderer } = window.require("electron");
