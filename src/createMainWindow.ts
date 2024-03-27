@@ -19,7 +19,7 @@ export  function createMainWindow (){
               nodeIntegration: false, // 允许在窗口中使用Node.js
               preload:MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             },
-            icon:'../../static/icons/main.png'
+            
           });
     }
     return mainWindow
