@@ -22,23 +22,13 @@ export const createWindow = (): void => {
     });
     ipcMainEventsInit(mainWindow)
 
-    protocol.registerFileProtocol('xxxx', (request, callback) => {
-      const url = request.url.substr(7)
-      console.log(url,'urllll')
-      callback(decodeURI(path.normalize(url)))
-    })
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
     mainWindow.setMinimizable(true);
     mainWindow.setIcon(path.join(__dirname, '../../static/icons/main.png'));
     protocol.handle('atom', (request) => {
       const filePath = request.url.slice('atom://'.length)
-      console.log(path.join(__dirname, filePath),'paht')
-      // return net.fetch(url.pathToFileURL(path.join(__dirname, filePath)).toString())
-      console.log('xxxxx')
-      console.log(pathToFileURL('C:/Users/objectMaker/Desktop/songs/1.mp3'),'xxx')
-      console.log(pathToFileURL('C:/Users/objectMaker/Desktop/songs/1.mp3').toString(),'fdfdsfsd')
-      return net.fetch(pathToFileURL('C:/Users/objectMaker/Desktop/songs/1.mp3').toString())
+      return net.fetch(pathToFileURL(filePath+'/1.mp3').toString())
     })
 
     const tray = new Tray(path.join(__dirname, '../../static/icons/main.png'))
