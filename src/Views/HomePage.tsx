@@ -14,7 +14,6 @@ export default function HomePage() {
 		setStatus(STATUS.HIDDEN)
 	})
 	return <>
-		<Nav />
 		<MediaList />
 		<Player />
 	</>
