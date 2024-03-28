@@ -6,13 +6,13 @@ import MediaList from './components/MediaList'
 import Player from './components/Player'
 import Root from "./routes/root";
 import {
-        createBrowserRouter,
+        createHashRouter,
         RouterProvider,
 } from "react-router-dom";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
         {
-                path: "/main_window",
+                path: "/",
                 element: <Root />,
                 children: [{
                         path: 'list',
