@@ -1,15 +1,14 @@
 import  React,{useState,useEffect} from 'react'
 import { GlobalContext } from './';
+import { STATUS } from '../enum';
 
 export default function(props:{children:React.ReactNode}){
 	const [fileList,setFileList] = useState([])
 	const [audioLink, setAudioLink] = useState('')
-
-
+	const [status, setStatus] = useState(STATUS.NORMAL)
 	useEffect(()=>{
 		let fileList:any;
 		try{
-			console.log(localStorage.getItem('fileList'),'ddddd')
 			fileList =JSON.parse(localStorage.getItem('fileList'))
 			console.log('fileList',fileList)
 		}finally{
@@ -19,7 +18,8 @@ export default function(props:{children:React.ReactNode}){
 		useEffect(()=>{
 		localStorage.setItem('fileList',JSON.stringify(fileList))
 		},[fileList])
-	return <GlobalContext.Provider value={{fileList,setFileList,audioLink,setAudioLink}}>
+	return <GlobalContext.Provider value={{fileList,setFileList,audioLink,setAudioLink,status,setStatus
+	}}>
 			{props.children}
 	</GlobalContext.Provider>
 }

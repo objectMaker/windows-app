@@ -3,10 +3,11 @@ import './index.css'
 import HomePage from './Views/HomePage';
 
 import GlobalContextComp from './context/GlobalContextComp';
+
 const root = createRoot(document.getElementById('root'));
 
 root.render(<>
-            <GlobalContextComp>
-                    <HomePage/>
-            </GlobalContextComp>
+        <GlobalContextComp>
+                <HomePage />
+        </GlobalContextComp>
 </>);
