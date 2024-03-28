@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import React from 'react';
 import './index.css'
-// import HomePage from './Views/HomePage';
 import Nav from './components/Nav'
-import Content from './components/Content'
+import MediaList from './components/MediaList'
+import Player from './components/Player'
 import Root from "./routes/root";
 import {
         createBrowserRouter,
@@ -14,6 +14,15 @@ const router = createBrowserRouter([
         {
                 path: "/main_window",
                 element: <Root />,
+                children: [{
+                        path: 'list',
+                        element: <MediaList />
+                },
+                {
+                        path: 'player',
+                        element: <Player />
+                }
+                ]
         },
 ]);
 
@@ -25,10 +34,7 @@ root.render(<>
         <GlobalContextComp>
                 <React.StrictMode>
                         <Nav />
-                        <Content>
-                                <RouterProvider router={router} />
-                        </Content>
-                        {/* <HomePage /> */}
+                        <RouterProvider router={router} />
                 </React.StrictMode>
         </GlobalContextComp>
 </>);
