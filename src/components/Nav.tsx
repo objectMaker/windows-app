@@ -1,5 +1,5 @@
 const { ipcRendererSend, onGetFile, onGetFileList } = (window as any).electron
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { GlobalContext } from '../context'
 import Icon from './Icon'
 import { STATUS } from '../enum'
