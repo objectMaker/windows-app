@@ -15,7 +15,7 @@ export default function () {
     return <div className="h-[100px] overflow-y-scroll">
         {
             fileList.map((file) =>
-                <div className="rounded flex align-middle p-1 m-1 transition-all h-8  hover:text-white border-solid border-blue-500 border-spacing-1 hover:bg-rose-500" key={file.name}
+                <div className="rounded flex align-middle p-1 m-2 transition-all h-8 bg-gray-200  hover:text-white border-solid border-blue-500 border-spacing-1 hover:bg-rose-500" key={file.name}
                 onClick={() =>ipcRendererSend('choose-file', file.path)}
                 
                 >{file.name}</div>

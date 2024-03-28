@@ -12,7 +12,7 @@ export default function player() {
     return <>
           {audioLink && <ReactPlayer url={audioLink} controls onProgress={handleProgress} />}
         <div className="relative z-10 p-4">
-            <div className="flex w-[41rem] rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
+            <div className="flex w-[41rem] rounded-lg bg-gray-50 shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
                 <div className="flex items-center space-x-4 px-6 py-4">
                     <svg className="h-6 w-6 flex-none" fill="none">
                         <path d="M6.22 11.03a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM3 6.75l-.53-.53a.75.75 0 0 0 0 1.06L3 6.75Zm4.28-3.22a.75.75 0 0 0-1.06-1.06l1.06 1.06ZM13.5 18a.75.75 0 0 0 0 1.5V18ZM7.28 9.97 3.53 6.22 2.47 7.28l3.75 3.75 1.06-1.06ZM3.53 7.28l3.75-3.75-1.06-1.06-3.75 3.75 1.06 1.06Zm16.72 5.47c0 2.9-2.35 5.25-5.25 5.25v1.5a6.75 6.75 0 0 0 6.75-6.75h-1.5ZM15 7.5c2.9 0 5.25 2.35 5.25 5.25h1.5A6.75 6.75 0 0 0 15 6v1.5ZM15 6H3v1.5h12V6Zm0 12h-1.5v1.5H15V18Z" fill="#64748B"></path>
