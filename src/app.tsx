@@ -3,6 +3,7 @@ import React from 'react';
 import './index.css'
 // import HomePage from './Views/HomePage';
 import Nav from './components/Nav'
+import Content from './components/Content'
 import Root from "./routes/root";
 import {
         createBrowserRouter,
@@ -24,7 +25,9 @@ root.render(<>
         <GlobalContextComp>
                 <React.StrictMode>
                         <Nav />
-                        <RouterProvider router={router} />
+                        <Content>
+                                <RouterProvider router={router} />
+                        </Content>
                         {/* <HomePage /> */}
                 </React.StrictMode>
         </GlobalContextComp>
