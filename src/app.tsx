@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { AliveScope, KeepAlive } from 'react-activation';
+import { AliveScope, KeepAlive, useActivate } from 'react-activation';
 import './index.css'
 import Nav from './components/Nav'
 import MediaList from './components/MediaList'
@@ -32,8 +32,8 @@ const root = createRoot(document.getElementById('root'));
 
 root.render(<>
         <GlobalContextComp>
-                <Nav />
                 <AliveScope>
+                        <Nav />
                         <RouterProvider router={router} />
                 </AliveScope>
         </GlobalContextComp>

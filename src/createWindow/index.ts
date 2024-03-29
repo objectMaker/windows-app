@@ -1,4 +1,4 @@
-import { Tray, protocol,net } from 'electron';
+import { Tray, protocol,net,session } from 'electron';
 import path from 'path';
 import url, {pathToFileURL} from 'url';
 
@@ -38,4 +38,13 @@ export const createWindow = (): void => {
     tray.on('click', ()=>{
       mainWindow.restore()
     })
+    console.log(__dirname,'__dirname+++')
+    session.defaultSession.loadExtension(
+      // (path.resolve(process.env.HOME, '.config/chromium/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.10.1_0'))
+      'C:/Users/yu/AppData/Local/Microsoft/Edge/User Data/Default/Extensions/gpphkfbcpidddadnkolkpfckpihlkkil/5.0.2_0',
+      // path.resolve(process.env.HOME, '.config/chromium/Default/Extensions/gpphkfbcpidddadnkolkpfckpihlkkil/5.0.2_0'),
+      // allowFileAccess is required to load the devtools extension on file:// URLs.
+      { allowFileAccess: true }
+    )
+    console.log('xxx')
   };

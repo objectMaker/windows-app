@@ -1,15 +1,25 @@
 import { useContext, useRef, useState, useEffect, useCallback } from "react";
+import ReactDOM from 'react-dom'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import duration from 'dayjs/plugin/duration'
 import dayjs from 'dayjs'
 import { GlobalContext } from "../context";
+import { useActivate, useUnactivate } from "react-activation";
 dayjs.extend(duration);
 
 
 export default function player() {
+    useActivate(() => {
+        console.log('player-active')
+    })
+    useUnactivate(() => {
+        console.log('player-deactive')
+    })
+
     const [fifteenSecondsPlayed, setFifteenSecondsPlayed] = useState(0);
     const [isMoveProgressIndicator, setIsMoveProgressIndicator] = useState(false);
     const handleProgress = useCallback((params: any) => {
+        console.log('handleProgresss++++++')
         setTotalTime(dayjs.duration(params.loadedSeconds, 'second').format('HH:mm:ss'))
         setTotalSecondsTime(params.loadedSeconds)
         setFifteenSecondsPlayed(15 / params.loadedSeconds);
@@ -78,7 +88,13 @@ export default function player() {
         }
     }, [reactPlayerProps])
     return <>
-        {audioLink && <ReactPlayer {...reactPlayerProps} width={0} height={0} ref={playerRef} url={audioLink} onProgress={handleProgress} />}
+        {audioLink &&
+            ReactDOM.createPortal(
+                <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}>
+                    <ReactPlayer {...reactPlayerProps} width={0} height={0} ref={playerRef} url={audioLink} onProgress={handleProgress} />
+                </div>,
+                document.body
+            )}
         <div className="flex w-[30rem] rounded-lg bg-gray-50 shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
             <div className="flex items-center space-x-2 px-6 py-0">
                 <svg className="h-6 w-6 flex-none scale-75" fill="none" onClick={() => handleChangeFifteenSeconds(true)}>
