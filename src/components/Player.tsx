@@ -31,11 +31,15 @@ export default function player() {
         playing: false,
         loop: true,
         progressInterval: 100,
+        stopOnUnmount: false,
     })
     //进度条长度
 
 
     const { audioLink } = useContext(GlobalContext);
+    useEffect(() => {
+        console.log('licknfdjfachange')
+    }, [audioLink])
     function handleUpdateReactPlayerProps(params: Partial<ReactPlayerProps>) {
         setReactPlayerProps((prevProps) => ({ ...prevProps, ...params }))
     }
@@ -58,6 +62,21 @@ export default function player() {
             playerRef.current.seekTo(Math.min(played + fifteenSecondsPlayed, 0.999999))
         }
     }
+    useEffect(() => {
+        console.log('初始化');
+        return () => {
+            console.log('销毁')
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log('初始化1');
+        console.log(reactPlayerProps, 'reactPlayerProps')
+        return () => {
+            console.log(reactPlayerProps, 'reactPlaxxxyerProps')
+            console.log('销毁1')
+        }
+    }, [reactPlayerProps])
     return <>
         {audioLink && <ReactPlayer {...reactPlayerProps} width={0} height={0} ref={playerRef} url={audioLink} onProgress={handleProgress} />}
         <div className="flex w-[30rem] rounded-lg bg-gray-50 shadow-xl shadow-black/5 ring-1 ring-slate-700/10">

@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import React from 'react';
+import { AliveScope, KeepAlive } from 'react-activation';
 import './index.css'
 import Nav from './components/Nav'
 import MediaList from './components/MediaList'
@@ -16,11 +16,11 @@ const router = createHashRouter([
                 element: <Root />,
                 children: [{
                         path: 'list',
-                        element: <MediaList />
+                        element: <KeepAlive id="list"><MediaList /></KeepAlive>
                 },
                 {
                         path: 'player',
-                        element: <Player />
+                        element: <KeepAlive id="player"><Player /></KeepAlive>
                 }
                 ]
         },
@@ -32,9 +32,9 @@ const root = createRoot(document.getElementById('root'));
 
 root.render(<>
         <GlobalContextComp>
-                <React.StrictMode>
-                        <Nav />
+                <Nav />
+                <AliveScope>
                         <RouterProvider router={router} />
-                </React.StrictMode>
+                </AliveScope>
         </GlobalContextComp>
 </>);
