@@ -11,10 +11,11 @@ export default function(mainWindow: Electron.BrowserWindow){
     });
     //注册事件
     ipcMain.on('open-folder', openFolderDialog);
-    ipcMain.on('choose-file', (_,filePath)=>{
-      const buffer = fs.readFileSync(filePath);
+    ipcMain.on('choose-file', (_,file:any)=>{
+      const buffer = fs.readFileSync(file.path);
       const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
       mainWindow.webContents.send('get-file', arrayBuffer);
+      mainWindow.webContents.send('get-current-file-info', file);
     });
     let timer:NodeJS.Timeout;
     const [initW,initH] = mainWindow.getSize();
@@ -50,12 +51,12 @@ export default function(mainWindow: Electron.BrowserWindow){
       function openFolderDialog() {
         dialog.showOpenDialog({
           properties: ['openDirectory']
-        }).then(result => {
+        }).then(async result => {
           if (!result.canceled) {
             // 你可以将路径发送到渲染进程或执行其他操作
             try {
               const fileDirPath = result.filePaths[0];
-                const fileList = getFilesByDirAndFileType(fileDirPath,'mp3');
+                const fileList = await getFilesByDirAndFileType(fileDirPath,'mp3');
                 mainWindow.webContents.send('get-file-list', fileList);
               } catch (err) {
                 console.error(err);

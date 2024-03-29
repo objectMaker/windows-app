@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, useEffect, useCallback } from "react";
+import { useContext, useRef, useState, useCallback } from "react";
 import ReactDOM from 'react-dom'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import duration from 'dayjs/plugin/duration'
@@ -19,7 +19,6 @@ export default function player() {
     const [fifteenSecondsPlayed, setFifteenSecondsPlayed] = useState(0);
     const [isMoveProgressIndicator, setIsMoveProgressIndicator] = useState(false);
     const handleProgress = useCallback((params: any) => {
-        console.log('handleProgresss++++++')
         setTotalTime(dayjs.duration(params.loadedSeconds, 'second').format('HH:mm:ss'))
         setTotalSecondsTime(params.loadedSeconds)
         setFifteenSecondsPlayed(15 / params.loadedSeconds);
@@ -43,13 +42,9 @@ export default function player() {
         progressInterval: 100,
         stopOnUnmount: false,
     })
-    //进度条长度
 
-
-    const { audioLink } = useContext(GlobalContext);
-    useEffect(() => {
-        console.log('licknfdjfachange')
-    }, [audioLink])
+    const { audioLink,currentFileInfo } = useContext(GlobalContext);
+    console.log(currentFileInfo,'currentFileinfo')
     function handleUpdateReactPlayerProps(params: Partial<ReactPlayerProps>) {
         setReactPlayerProps((prevProps) => ({ ...prevProps, ...params }))
     }
@@ -72,21 +67,7 @@ export default function player() {
             playerRef.current.seekTo(Math.min(played + fifteenSecondsPlayed, 0.999999))
         }
     }
-    useEffect(() => {
-        console.log('初始化');
-        return () => {
-            console.log('销毁')
-        }
-    }, [])
 
-    useEffect(() => {
-        console.log('初始化1');
-        console.log(reactPlayerProps, 'reactPlayerProps')
-        return () => {
-            console.log(reactPlayerProps, 'reactPlaxxxyerProps')
-            console.log('销毁1')
-        }
-    }, [reactPlayerProps])
     return <>
         {audioLink &&
             ReactDOM.createPortal(

@@ -16,7 +16,7 @@ export default function () {
         {
             fileList.map((file) =>
                 <div className="rounded flex align-middle p-1 m-2 transition-all h-8 bg-gray-200  hover:text-white border-solid border-blue-500 border-spacing-1 hover:bg-rose-500" key={file.name}
-                onClick={() =>ipcRendererSend('choose-file', file.path)}
+                onClick={() =>ipcRendererSend('choose-file', file)}
                 
                 >{file.name}</div>
             )
