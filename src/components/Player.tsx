@@ -14,6 +14,7 @@ export default function player() {
         loop: true,
         progressInterval: 80,
         stopOnUnmount: false,
+        pip:true,
     })
 
     // const  [canSetLocalPlayed,setCanSetLocalPlayed] = useState(false);
