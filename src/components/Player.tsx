@@ -12,7 +12,7 @@ export default function player() {
     const [reactPlayerProps, setReactPlayerProps] = useState<ReactPlayerProps>({
         playing: false,
         loop: true,
-        progressInterval: 80,
+        progressInterval: 50,
         stopOnUnmount: false,
         pip:true,
     })
@@ -44,7 +44,7 @@ export default function player() {
             } else {  
                 console.log('视频元数据尚未加载，无法计算播放百分比。');  
             }
-        },80))
+        },50))
         setCanSet(false)
     })
     useActivate(()=>{
