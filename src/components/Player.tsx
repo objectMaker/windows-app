@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, useCallback } from "react";
+import { useContext, useRef, useState,useCallback, useEffect } from "react";
 import ReactDOM from 'react-dom'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import duration from 'dayjs/plugin/duration'
@@ -9,16 +9,58 @@ dayjs.extend(duration);
 
 
 export default function player() {
-    useActivate(() => {
-        console.log('player-active')
+    const [reactPlayerProps, setReactPlayerProps] = useState<ReactPlayerProps>({
+        playing: false,
+        loop: true,
+        progressInterval: 80,
+        stopOnUnmount: false,
     })
-    useUnactivate(() => {
-        console.log('player-deactive')
-    })
+
+    // const  [canSetLocalPlayed,setCanSetLocalPlayed] = useState(false);
+    const { audioLink,currentFileInfo } = useContext(GlobalContext);
 
     const [fifteenSecondsPlayed, setFifteenSecondsPlayed] = useState(0);
     const [isMoveProgressIndicator, setIsMoveProgressIndicator] = useState(false);
+    const [canSet,setCanSet] = useState(false);
+    const [needReset,setNeedReset] = useState(false);
+    const [timer,SetTimer] = useState<any>();
+    // const [videoDom,setVideoDom] = useState<any>();
+    useUnactivate(()=>{
+        if(!reactPlayerProps.playing){
+            return;
+        }
+        const video = document.querySelector('#react-player')?.querySelector('video');
+        // setVideoDom(video)
+        SetTimer(setInterval(()=>{
+            // playerRef.current.
+            if (video.readyState >= 3) {  
+                const currentTime = video.currentTime;  
+                const duration = video.duration;  
+                const played = (currentTime / duration) 
+                console.log('当前播放百分比:', played.toFixed(2));  
+                 currentFileInfo.ino &&  localStorage.setItem(currentFileInfo.ino,JSON.stringify({played}))
+
+            } else {  
+                console.log('视频元数据尚未加载，无法计算播放百分比。');  
+            }
+        },80))
+        setCanSet(false)
+    })
+    useActivate(()=>{
+        clearInterval(timer)
+    })
     const handleProgress = useCallback((params: any) => {
+        if(!canSet){
+            return;
+        }
+        const playInfo =  localStorage.getItem(currentFileInfo.ino)
+        if(playInfo && needReset){
+            const {played} =  JSON.parse(playInfo)
+            setNeedReset(false)
+            return playerRef.current.seekTo(played)
+        }
+        //开始播放了，然后从localStorage里面尝试获取
+        currentFileInfo.ino &&  localStorage.setItem(currentFileInfo.ino,JSON.stringify({played:params.played}))
         setTotalTime(dayjs.duration(params.loadedSeconds, 'second').format('HH:mm:ss'))
         setTotalSecondsTime(params.loadedSeconds)
         setFifteenSecondsPlayed(15 / params.loadedSeconds);
@@ -27,7 +69,7 @@ export default function player() {
             setPlayedTime(dayjs.duration(params.playedSeconds, 'second').format('HH:mm:ss'))
             setPlayed(params.played)
         }
-    }, [isMoveProgressIndicator])
+    },[canSet,needReset,currentFileInfo,isMoveProgressIndicator])
     const [playedTime, setPlayedTime] = useState('00:00:00')
     const [totalTime, setTotalTime] = useState('00:00:00')
     const [secondsTime, setTotalSecondsTime] = useState(0)
@@ -36,14 +78,8 @@ export default function player() {
     const progressIndicatorTotalRef = useRef<HTMLDivElement>()
     // const progressIndicatorCurrentRef = useRef<HTMLDivElement>()
     const playerRef = useRef<ReactPlayer>(null);
-    const [reactPlayerProps, setReactPlayerProps] = useState<ReactPlayerProps>({
-        playing: false,
-        loop: true,
-        progressInterval: 100,
-        stopOnUnmount: false,
-    })
 
-    const { audioLink,currentFileInfo } = useContext(GlobalContext);
+
     console.log(currentFileInfo,'currentFileinfo')
     function handleUpdateReactPlayerProps(params: Partial<ReactPlayerProps>) {
         setReactPlayerProps((prevProps) => ({ ...prevProps, ...params }))
@@ -67,12 +103,47 @@ export default function player() {
             playerRef.current.seekTo(Math.min(played + fifteenSecondsPlayed, 0.999999))
         }
     }
+    // document.remove
+    function reInitPlayed(){
+        if(!audioLink){
+            return;
+        }
+        if(!playerRef.current){
+            return;
+        }
+        try{
+            const playInfo =  localStorage.getItem(currentFileInfo.ino)
+            // const isPlaying = localStorage.getItem('isPlaying')
+              if(playInfo){
+                  const {played} = JSON.parse(playInfo)
+                 if(!playerRef.current.getCurrentTime() && played){
+                    setNeedReset(true)
+                 }else{
+                    setNeedReset(false)
+                 }
+
+                    // handleUpdateReactPlayerProps({
+                    //     playing:!!isPlaying,
+                    // })
+                    // playerRef.current.seekTo(played)
+              }else{
+                  setNeedReset(false)
+              }
+          }catch(e){
+              console.log(e,'获取当前对象时间报错')
+          }
+          setCanSet(true)
+        //   videoDom
+    }
+    useEffect(()=>{
+        reInitPlayed()
+    },[audioLink,playerRef.current])
 
     return <>
         {audioLink &&
             ReactDOM.createPortal(
                 <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}>
-                    <ReactPlayer {...reactPlayerProps} width={0} height={0} ref={playerRef} url={audioLink} onProgress={handleProgress} />
+                    <ReactPlayer id="react-player" {...reactPlayerProps} width={0} height={0} ref={playerRef} url={audioLink} onProgress={handleProgress} />
                 </div>,
                 document.body
             )}
