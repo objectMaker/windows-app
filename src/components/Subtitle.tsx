@@ -1,21 +1,21 @@
 import pubSub from 'pubsub-js'
+import {SUBTITLE_EVENT} from '../constant'
+
 import { useContext,useEffect, useState } from "react"
 import { GlobalContext } from "../context"
-import {SUBTITLE_EVENT} from '../constant'
 export default function(){
 	const {subtitle} = useContext(GlobalContext)
-	const [letter,setLetter] = useState('')
+	const [text,setText] = useState('')
 	useEffect(() => {
-		pubSub.subscribe(SUBTITLE_EVENT,(params:any)=>{
-	console.log('xxx',params)
+		pubSub.subscribe(SUBTITLE_EVENT,(_,data:any)=>{
+			const subtitleItem =  subtitle?.find((item:any)=>item.start<data.playedSeconds&&data.playedSeconds<item.end)
+			setText(subtitleItem?.text || '')
 		})
 		return ()=>{
-			console.log('un');
             pubSub.unsubscribe(SUBTITLE_EVENT)
 		}
-	},[])
+	},[subtitle])
 	return <>
-		{subtitle && <div>letter</div>}
-		{<div>显示的字母</div>}
+		{subtitle && <div>{text}</div>}
 	</>	
 }

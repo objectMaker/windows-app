@@ -5,6 +5,9 @@ import duration from 'dayjs/plugin/duration'
 import dayjs from 'dayjs'
 import { GlobalContext } from "../context";
 import { useActivate, useUnactivate } from "react-activation";
+import pubSub from 'pubsub-js'
+import {SUBTITLE_EVENT} from '../constant'
+
 dayjs.extend(duration);
 
 
@@ -62,6 +65,7 @@ export default function player() {
         }
         //开始播放了，然后从localStorage里面尝试获取
         currentFileInfo.ino &&  localStorage.setItem(currentFileInfo.ino,JSON.stringify({played:params.played}))
+        pubSub.publish(SUBTITLE_EVENT,params)
         setTotalTime(dayjs.duration(params.loadedSeconds, 'second').format('HH:mm:ss'))
         setTotalSecondsTime(params.loadedSeconds)
         setFifteenSecondsPlayed(15 / params.loadedSeconds);

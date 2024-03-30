@@ -35,7 +35,11 @@ export default function(mainWindow: Electron.BrowserWindow){
       if(!input){
         return ;
       }
-      event.reply('get-subtitle', parseSync(input)); 
+      event.reply('get-subtitle', parseSync(input).map(( item:any)=>({
+        start:item.data.start/1000,
+        end:item.data.end/1000,
+        text:item.data.text.replace(/<[^>]*>/g, '')
+      }))); 
 
     });
     let timer:NodeJS.Timeout;
