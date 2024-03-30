@@ -77,6 +77,7 @@ export default function player() {
     const [totalTime, setTotalTime] = useState('00:00:00')
     const [secondsTime, setTotalSecondsTime] = useState(0)
     const [played, setPlayed] = useState(0)
+    const [lang,setLang] = useState('en')
 
     const progressIndicatorTotalRef = useRef<HTMLDivElement>()
     // const progressIndicatorCurrentRef = useRef<HTMLDivElement>()
@@ -141,6 +142,24 @@ export default function player() {
         reInitPlayed()
     },[audioLink,playerRef.current])
 
+    useEffect(()=>{
+        const currentLang = localStorage.getItem('lang') 
+        currentLang ||  localStorage.setItem('lang','en')
+        setLang(currentLang || 'en')
+    },[])
+
+    function handleChangeLang() {
+        const langList = ['en','cn','all']
+        let currentIndex = langList.findIndex(item=>item===localStorage.getItem('lang'))
+        if(currentIndex === 2){
+            currentIndex = 0
+        }else{
+            currentIndex+=1;
+        }
+        localStorage.setItem('lang',langList[currentIndex])
+        setLang(langList[currentIndex])
+    }
+
     return <>
         {audioLink &&
             ReactDOM.createPortal(
@@ -149,8 +168,12 @@ export default function player() {
                 </div>,
                 document.body
             )}
-        <div className="flex w-[30rem] rounded-lg bg-gray-50 shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
-            <div className="flex items-center space-x-2 px-6 py-0">
+        <div className="flex w-[30rem] rounded-lg bg-gray-50 shadow-xl shadow-black/5 ring-1 ring-slate-700/15 m-2 ml-3">
+     <div className="flex items-center space-x-2 px-6 mt-1">
+         <span className="h-full flex align-middle w-3 items-center justify-center">{lang}</span>
+            <svg onClick={handleChangeLang} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+             <path strokeLinecap="round" strokeLinejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
+            </svg>
                 <svg className="h-6 w-6 flex-none scale-75" fill="none" onClick={() => handleChangeFifteenSeconds(true)}>
                     <path d="M6.22 11.03a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM3 6.75l-.53-.53a.75.75 0 0 0 0 1.06L3 6.75Zm4.28-3.22a.75.75 0 0 0-1.06-1.06l1.06 1.06ZM13.5 18a.75.75 0 0 0 0 1.5V18ZM7.28 9.97 3.53 6.22 2.47 7.28l3.75 3.75 1.06-1.06ZM3.53 7.28l3.75-3.75-1.06-1.06-3.75 3.75 1.06 1.06Zm16.72 5.47c0 2.9-2.35 5.25-5.25 5.25v1.5a6.75 6.75 0 0 0 6.75-6.75h-1.5ZM15 7.5c2.9 0 5.25 2.35 5.25 5.25h1.5A6.75 6.75 0 0 0 15 6v1.5ZM15 6H3v1.5h12V6Zm0 12h-1.5v1.5H15V18Z" fill="#64748B"></path>
                     <path d="M3 15.75h.75V21" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>

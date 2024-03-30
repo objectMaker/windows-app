@@ -12,7 +12,6 @@ export  function getFilesByDirAndFileType(dir:string,fileType:string|string[]){
     return  Array.isArray(fileType)?fileType.includes(currentFileType):
     currentFileType === fileType
    })
-   console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
    const dealFiles = currentTypeFiles.map(async item=>{
     const currentPath = path.join(currentDir,item);
     const stat = fs.statSync(currentPath)

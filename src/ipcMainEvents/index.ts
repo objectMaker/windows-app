@@ -19,13 +19,8 @@ export default function(mainWindow: Electron.BrowserWindow){
       const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
       mainWindow.webContents.send('get-file', arrayBuffer);
       mainWindow.webContents.send('get-current-file-info', file);
-      console.log(file.path,'file.path')
       const subtitlePathSrt = file.path.replace(path.extname(file.path), '.en.srt');
       const subtitlePathVvt = file.path.replace(path.extname(file.path), '.en.vvt');
-      console.log(subtitlePathSrt,'x')
-      console.log(subtitlePathVvt,'y')
-      console.log(fs.existsSync(subtitlePathSrt),'z')
-      console.log(fs.existsSync(subtitlePathVvt),'a')
       let input;
       if(fs.existsSync(subtitlePathSrt)){
          input = fs.readFileSync(subtitlePathSrt,'utf-8');
@@ -35,11 +30,31 @@ export default function(mainWindow: Electron.BrowserWindow){
       if(!input){
         return ;
       }
-      event.reply('get-subtitle', parseSync(input).map(( item:any)=>({
-        start:item.data.start/1000,
-        end:item.data.end/1000,
-        text:item.data.text.replace(/<[^>]*>/g, '')
-      }))); 
+      function getSubtitleFile(lang:'en'|'zh-CN',suffix:'srt'|'vvt'){
+        const subtitlePath = file.path.replace(path.extname(file.path), `.${lang}.${suffix}`);
+        if(fs.existsSync(subtitlePath)){
+          return fs.readFileSync(subtitlePath,'utf-8');
+        }
+      }
+      const cnSubtitle = getSubtitleFile('zh-CN','srt') || getSubtitleFile('zh-CN','vvt');
+      const enSubtitle = getSubtitleFile('en','srt') || getSubtitleFile('en','vvt');
+      
+      function parseFileString(subtitle?:string){
+        if(!subtitle){
+          return []
+        }
+        return parseSync(subtitle).map(( item:any)=>({
+          start:item.data.start/1000,
+          end:item.data.end/1000,
+          text:item.data.text.replace(/<[^>]*>/g, '')
+        }))
+      }
+      const subtitleMap = {
+        cnSubtitle:parseFileString(cnSubtitle),
+        enSubtitle:parseFileString(enSubtitle)
+      }
+
+      event.reply('get-subtitle', subtitleMap); 
 
     });
     let timer:NodeJS.Timeout;
