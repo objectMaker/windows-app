@@ -1,5 +1,6 @@
 import path from 'path'
 import fs from 'fs'
+
 import mm from 'music-metadata'
 //获取当前一个绝对路径下面的所有文件，通过文件类型过滤
 export  function getFilesByDirAndFileType(dir:string,fileType:string|string[]){
@@ -31,3 +32,5 @@ export  function getFilesByDirAndFileType(dir:string,fileType:string|string[]){
    })
    return Promise.all(dealFiles);
 }
+
+

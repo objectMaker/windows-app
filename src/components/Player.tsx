@@ -1,14 +1,12 @@
 import { useContext, useRef, useState,useCallback, useEffect } from "react";
 import ReactDOM from 'react-dom'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
-import duration from 'dayjs/plugin/duration'
-import dayjs from 'dayjs'
 import { GlobalContext } from "../context";
 import { useActivate, useUnactivate } from "react-activation";
 import pubSub from 'pubsub-js'
 import {SUBTITLE_EVENT} from '../constant'
+import { formatDuration } from "../browserUtils";
 
-dayjs.extend(duration);
 
 
 export default function player() {
@@ -66,12 +64,12 @@ export default function player() {
         //开始播放了，然后从localStorage里面尝试获取
         currentFileInfo.ino &&  localStorage.setItem(currentFileInfo.ino,JSON.stringify({played:params.played}))
         pubSub.publish(SUBTITLE_EVENT,params)
-        setTotalTime(dayjs.duration(params.loadedSeconds, 'second').format('HH:mm:ss'))
+        setTotalTime(formatDuration(params.loadedSeconds))
         setTotalSecondsTime(params.loadedSeconds)
         setFifteenSecondsPlayed(15 / params.loadedSeconds);
         //如果是在拖动，进度条和时间只能根据手拖动的位置进行计算
         if (!isMoveProgressIndicator) {
-            setPlayedTime(dayjs.duration(params.playedSeconds, 'second').format('HH:mm:ss'))
+            setPlayedTime(formatDuration(params.playedSeconds))
             setPlayed(params.played)
         }
     },[canSet,needReset,currentFileInfo,isMoveProgressIndicator])
@@ -98,7 +96,7 @@ export default function player() {
         setIsMoveProgressIndicator(true)
     }
     function handlePlayedChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setPlayedTime(dayjs.duration(+e.target.value * secondsTime, 'second').format('HH:mm:ss'))
+        setPlayedTime(formatDuration(+e.target.value * secondsTime))
         setPlayed(+e.target.value)
     }
     function handleChangeFifteenSeconds(isBack?: boolean) {

@@ -35,6 +35,11 @@ export default function Nav() {
       setCurrentFileInfo(value)
     })
     onGetFileList('get-file-list', (e: any, v: any) => {
+       v.sort((pre:any,current:any)=>{
+        const currentCount = +current.name.split('.')[0]
+        const preCount = +pre.name.split('.')[0]
+        return  preCount - currentCount
+      })
       setFileList(v)
     })
     const dragFalse = () => {
