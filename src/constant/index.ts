@@ -1,0 +1,1 @@
+export const SUBTITLE_EVENT = 'SUBTITLE_EVENT';

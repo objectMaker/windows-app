@@ -1,4 +1,4 @@
-const { ipcRendererSend, onGetFile, onGetFileList,onGetCurrentFileInfo } = (window as any).electron
+const { ipcRendererSend, onGetFile, onGetFileList,onGetCurrentFileInfo,onGetSubtitle } = (window as any).electron
 import { useEffect, useContext } from 'react'
 import { GlobalContext } from '../context'
 import Icon from './Icon'
@@ -18,7 +18,7 @@ function handleOpenFolder() {
 
 export default function Nav() {
 
-  const { setFileList, setAudioLink, status,setCurrentFileInfo } = useContext(GlobalContext);
+  const { setFileList, setAudioLink, status,setCurrentFileInfo,setSubtitle } = useContext(GlobalContext);
 
   // const [isClick, setClick] = useState(false)
 
@@ -27,6 +27,9 @@ export default function Nav() {
     onGetFile('get-file', async (_event: any, value: any) => {
       const audioBlob = new Blob([value], { type: 'audio/wav' }); // 或者使用其他适当的MIME类型  
       setAudioLink(URL.createObjectURL(audioBlob))
+    })
+    onGetSubtitle('get-subtitle', async (_event: any, value: any) => {
+        setSubtitle(value)
     })
     onGetCurrentFileInfo('get-current-file-info', async (_event: any, value: any) => {
       setCurrentFileInfo(value)

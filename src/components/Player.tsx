@@ -18,7 +18,7 @@ export default function player() {
     })
 
     // const  [canSetLocalPlayed,setCanSetLocalPlayed] = useState(false);
-    const { audioLink,currentFileInfo } = useContext(GlobalContext);
+    const { audioLink,currentFileInfo} = useContext(GlobalContext);
 
     const [fifteenSecondsPlayed, setFifteenSecondsPlayed] = useState(0);
     const [isMoveProgressIndicator, setIsMoveProgressIndicator] = useState(false);
@@ -122,7 +122,6 @@ export default function player() {
                  }else{
                     setNeedReset(false)
                  }
-
                     // handleUpdateReactPlayerProps({
                     //     playing:!!isPlaying,
                     // })

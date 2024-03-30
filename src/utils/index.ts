@@ -18,7 +18,6 @@ export  function getFilesByDirAndFileType(dir:string,fileType:string|string[]){
     const extname = path.extname(currentPath)
     const basename =  path.basename(currentPath,extname)
     const metadata = await mm.parseFile(currentPath)
-        console.log("🚀 ~ dealFiles ~ metadata:", metadata);
         return {
             ...stat,
             path:currentPath,
@@ -30,6 +29,5 @@ export  function getFilesByDirAndFileType(dir:string,fileType:string|string[]){
             metadata
         }
    })
-   console.log(Promise.all(dealFiles),'xxxx')
    return Promise.all(dealFiles);
 }

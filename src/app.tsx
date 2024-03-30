@@ -1,10 +1,13 @@
 import { createRoot } from 'react-dom/client';
-import { AliveScope, KeepAlive, useActivate } from 'react-activation';
-import './index.css'
+import { AliveScope, KeepAlive } from 'react-activation';
+import GlobalContextComp from './context/GlobalContextComp';
 import Nav from './components/Nav'
+import Subtitle from './components/Subtitle'
 import MediaList from './components/MediaList'
 import Player from './components/Player'
 import Root from "./routes/root";
+import './index.css'
+
 import {
         createHashRouter,
         RouterProvider,
@@ -20,13 +23,16 @@ const router = createHashRouter([
                 },
                 {
                         path: 'player',
-                        element: <KeepAlive id="player"><Player /></KeepAlive>
+                        element: <KeepAlive id="player">
+                                             <Subtitle />
+                                             <Player />
+                                        </KeepAlive>
                 }
                 ]
         },
 ]);
 
-import GlobalContextComp from './context/GlobalContextComp';
+
 
 const root = createRoot(document.getElementById('root'));
 

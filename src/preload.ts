@@ -10,6 +10,9 @@ contextBridge.exposeInMainWorld('electron', {
   onGetFile: function (_,callback) {
     ipcRenderer.on('get-file', (e,v)=>callback(e,v))
   },
+  onGetSubtitle: function (_,callback) {
+    ipcRenderer.on('get-subtitle', (e,v)=>callback(e,v))
+  },
   onGetCurrentFileInfo: function (_,callback) {
     ipcRenderer.on('get-current-file-info', (e,v)=>callback(e,v))
   },
