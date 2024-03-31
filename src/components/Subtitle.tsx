@@ -23,7 +23,7 @@ export default function(){
             pubSub.unsubscribe(SUBTITLE_EVENT)
 		}
 	},[subtitle])
-	return <div className=" text-xs">
+	return <div className=" text-sm">
 		{subtitle?.enSubtitle?.length>0 && lang !== 'cn' && <div className='w-full h-5 p-1 align-middle'>{textEn}</div>}
 		{subtitle?.cnSubtitle?.length>0 && lang !== 'en' && <div className='w-full h-5 p-1 align-middle'>{textCn}</div>}
 	</div>	
