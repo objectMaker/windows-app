@@ -10,6 +10,9 @@ export default function(){
 	const [lang,setLang] = useState('en')
 	useEffect(() => {
 		pubSub.subscribe(SUBTITLE_EVENT,(_,data:any)=>{
+			if(!subtitle){
+				return;
+			}
 			setLang(localStorage.getItem('lang'))
 			const subtitleItemEn =  subtitle.enSubtitle?.find((item:any)=>item.start<data.playedSeconds&&data.playedSeconds<item.end)
 			setTextEn(subtitleItemEn?.text || '')
@@ -21,7 +24,7 @@ export default function(){
 		}
 	},[subtitle])
 	return <div className=" text-xs">
-		{subtitle && lang !== 'cn' && <div className='w-full h-5 p-1 align-middle'>{textEn}</div>}
-		{subtitle && lang !== 'en' && <div className='w-full h-5 p-1 align-middle'>{textCn}</div>}
+		{subtitle?.enSubtitle?.length>0 && lang !== 'cn' && <div className='w-full h-5 p-1 align-middle'>{textEn}</div>}
+		{subtitle?.cnSubtitle?.length>0 && lang !== 'en' && <div className='w-full h-5 p-1 align-middle'>{textCn}</div>}
 	</div>	
 }

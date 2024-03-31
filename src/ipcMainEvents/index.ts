@@ -19,17 +19,6 @@ export default function(mainWindow: Electron.BrowserWindow){
       const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
       mainWindow.webContents.send('get-file', arrayBuffer);
       mainWindow.webContents.send('get-current-file-info', file);
-      const subtitlePathSrt = file.path.replace(path.extname(file.path), '.en.srt');
-      const subtitlePathVvt = file.path.replace(path.extname(file.path), '.en.vvt');
-      let input;
-      if(fs.existsSync(subtitlePathSrt)){
-         input = fs.readFileSync(subtitlePathSrt,'utf-8');
-      }else if(fs.existsSync(subtitlePathVvt)){
-        input = fs.readFileSync(subtitlePathVvt,'utf-8');
-      }
-      if(!input){
-        return ;
-      }
       function getSubtitleFile(lang:'en'|'zh-CN',suffix:'srt'|'vvt'){
         const subtitlePath = file.path.replace(path.extname(file.path), `.${lang}.${suffix}`);
         if(fs.existsSync(subtitlePath)){

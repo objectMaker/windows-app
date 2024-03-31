@@ -35,12 +35,23 @@ export default function Nav() {
       setCurrentFileInfo(value)
     })
     onGetFileList('get-file-list', (e: any, v: any) => {
-       v.sort((pre:any,current:any)=>{
+      const firstIsStringArray = v.filter((item:any)=>{
+       return  Number.isNaN(Number(item.name.split('.')[0]))
+      })
+      firstIsStringArray.sort((pre:any,current:any)=>{
+        const currentCount = +current.name.split('.')[1]
+        const preCount = +pre.name.split('.')[1]
+        return  preCount - currentCount
+      })
+      const firstIsNumberArray = v.filter((item:any)=>{
+       return  !Number.isNaN(Number(item.name.split('.')[0]))
+      })
+      firstIsNumberArray.sort((pre:any,current:any)=>{
         const currentCount = +current.name.split('.')[0]
         const preCount = +pre.name.split('.')[0]
         return  preCount - currentCount
       })
-      setFileList(v)
+      setFileList([...firstIsStringArray,...firstIsNumberArray])
     })
     const dragFalse = () => {
       // setClick(false)
@@ -72,6 +83,7 @@ export default function Nav() {
         onMouseDown={() => handleMouseDown()}
         onMouseUp={() => handleMouseUp()}
         style={status === STATUS.NORMAL ? {
+          visibility:'visible'
         } : { visibility: 'hidden' }}
         id="nav" className='transition flex flex-row h-5 item w-full justify-end bg-blue-400 shadow-lg'>
 

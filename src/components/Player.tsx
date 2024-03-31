@@ -6,7 +6,7 @@ import { useActivate, useUnactivate } from "react-activation";
 import pubSub from 'pubsub-js'
 import {SUBTITLE_EVENT} from '../constant'
 import { formatDuration } from "../browserUtils";
-
+import { STATUS } from "../enum";
 
 
 export default function player() {
@@ -19,7 +19,7 @@ export default function player() {
     })
 
     // const  [canSetLocalPlayed,setCanSetLocalPlayed] = useState(false);
-    const { audioLink,currentFileInfo} = useContext(GlobalContext);
+    const { audioLink,currentFileInfo,status} = useContext(GlobalContext);
 
     const [fifteenSecondsPlayed, setFifteenSecondsPlayed] = useState(0);
     const [isMoveProgressIndicator, setIsMoveProgressIndicator] = useState(false);
@@ -168,7 +168,7 @@ export default function player() {
                 </div>,
                 document.body
             )}
-        <div className="flex w-[30rem] rounded-lg bg-gray-50 shadow-xl shadow-black/5 ring-1 ring-slate-700/15 m-2 ml-3">
+        <div className={`${status === STATUS.NORMAL?'visible':'invisible'} flex w-[30rem] rounded-lg bg-gray-50 shadow-xl shadow-black/5 ring-1 ring-slate-700/15 m-2 ml-3`}>
      <div className="flex items-center space-x-2 px-6 mt-1">
          <span className="h-full flex align-middle w-3 items-center justify-center">{lang}</span>
             <svg onClick={handleChangeLang} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
