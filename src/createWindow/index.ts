@@ -52,4 +52,17 @@ export const createWindow = (): void => {
     // ipcMain.
     mainWindow.webContents.send('toggle-player-pause');
     })
+    //显示隐藏
+  globalShortcut.register('CommandOrControl+Shift+1', () => {
+    console.log('触发-----')
+    //触发事件让音频暂停播放
+    // ipcMain.
+    mainWindow.webContents.send('toggle-player-pause');
+    })
+    //切换窗口大小
+  globalShortcut.register('CommandOrControl+Shift+0', () => {
+      mainWindow.setBounds({
+        height:mainWindow.getSize()[1]<+process.env.BORDER_EDGE?+process.env.CLIENT_MAX_HEIGHT:+process.env.CLIENT_MIN_HEIGHT,
+      })
+    })
   };

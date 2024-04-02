@@ -1,4 +1,6 @@
 import { BrowserWindow } from 'electron';
+import {config} from 'dotenv'
+config()
 
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 let mainWindow: BrowserWindow;
@@ -6,10 +8,8 @@ let mainWindow: BrowserWindow;
 export  function createMainWindow (){
     if(!mainWindow){
       mainWindow =  new BrowserWindow({
-            width: 560,
-            height: 100 ,
-            // width: 560,
-            // height: 600 ,
+            width: +process.env.CLIENT_WIDTH,
+            height: +process.env.CLIENT_MIN_HEIGHT ,
             type: 'toolbar', // 使用toolbar类型使窗口浮动
             frame: false, // 无边框，这样可以自定义窗口的外观
             resizable: false, // 不可调整大小

@@ -52,6 +52,7 @@
     "@types/pubsub-js": "^1.8.6",
     "activation": "^1.0.0",
     "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
     "electron": "^29.1.5",
     "electron-squirrel-startup": "^1.0.0",
     "localforage": "^1.10.0",

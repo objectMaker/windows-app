@@ -47,9 +47,9 @@ export default function(mainWindow: Electron.BrowserWindow){
 
     });
     let timer:NodeJS.Timeout;
-    const [initW,initH] = mainWindow.getSize();
     ipcMain.on('drag',(_,isDrag) => {
-      console.log(initW,initH,'wh')
+     let initH= mainWindow.getSize()[1];
+     initH=  initH>+process.env.BORDER_EDGE?+process.env.CLIENT_MAX_HEIGHT:+process.env.CLIENT_MIN_HEIGHT;
       if(!isDrag){
         return clearInterval(timer);
       }
@@ -71,7 +71,7 @@ export default function(mainWindow: Electron.BrowserWindow){
       mainWindow.setBounds({
         x:x-disX,
         y:y-disY,
-        width:initW,
+        width:+process.env.CLIENT_WIDTH,
         height:initH
       })
       },3);
