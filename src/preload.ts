@@ -19,4 +19,7 @@ contextBridge.exposeInMainWorld('electron', {
   onGetFileList: function (_,callback) {
     ipcRenderer.on('get-file-list', (e,v)=>callback(e,v))
   },
+  onTogglePlayerPause: function (_,callback) {
+    ipcRenderer.on('toggle-player-pause', (e,v)=>callback(e,v))
+  },
 });

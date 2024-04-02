@@ -1,4 +1,4 @@
-import { BrowserWindow, app,protocol } from 'electron';
+import { BrowserWindow, app,protocol,globalShortcut } from 'electron';
 import { createWindow } from './createWindow';
 import './ipcMainEvents';
 
@@ -48,4 +48,7 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+app.on('will-quit',()=>{
+  globalShortcut.unregisterAll()
+})
 

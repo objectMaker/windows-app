@@ -1,6 +1,5 @@
-import { Tray, protocol,net,session } from 'electron';
-import path from 'path';
-import url, {pathToFileURL} from 'url';
+import { Tray, protocol,net,session,globalShortcut, ipcMain  } from 'electron';
+import  {pathToFileURL} from 'url';
 
 
 import {createMainWindow} from '../createMainWindow';
@@ -46,5 +45,11 @@ export const createWindow = (): void => {
       // allowFileAccess is required to load the devtools extension on file:// URLs.
       { allowFileAccess: true }
     )
-    console.log('xxx')
+
+  globalShortcut.register('CommandOrControl+Shift+S', () => {
+    console.log('触发-----')
+    //触发事件让音频暂停播放
+    // ipcMain.
+    mainWindow.webContents.send('toggle-player-pause');
+    })
   };
