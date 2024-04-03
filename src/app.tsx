@@ -7,7 +7,10 @@ import MediaList from './components/MediaList'
 import Player from './components/Player'
 import Root from "./routes/root";
 import './index.css'
-
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import {
         createHashRouter,
         RouterProvider,
@@ -24,9 +27,9 @@ const router = createHashRouter([
                 {
                         path: 'player',
                         element: <KeepAlive id="player">
-                                             <Subtitle />
-                                             <Player />
-                                        </KeepAlive>
+                                <Subtitle />
+                                <Player />
+                        </KeepAlive>
                 }
                 ]
         },
