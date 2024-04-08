@@ -2,7 +2,7 @@ import { BrowserWindow, app,protocol,globalShortcut } from 'electron';
 import { createWindow } from './createWindow';
 import './ipcMainEvents';
 
-
+console.log(process.env.mode,'modeeee')
 protocol.registerSchemesAsPrivileged([
   {
     scheme: 'atom',
