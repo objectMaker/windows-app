@@ -20,6 +20,15 @@ contextBridge.exposeInMainWorld('electron', {
     ipcRenderer.on('get-file-list', (e,v)=>callback(e,v))
   },
   onTogglePlayerPause: function (_,callback) {
+    ipcRenderer.removeAllListeners('toggle-player-pause')
     ipcRenderer.on('toggle-player-pause', (e,v)=>callback(e,v))
+  },
+  onBack: function (_,callback) {
+    ipcRenderer.removeAllListeners('back')
+    ipcRenderer.on('back', (e,v)=>callback(e,v))
+  },
+  onGo: function (_,callback) {
+    ipcRenderer.removeAllListeners('go')
+    ipcRenderer.on('go', (e,v)=>callback(e,v))
   },
 });

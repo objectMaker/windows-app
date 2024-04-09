@@ -1,4 +1,5 @@
-import { Tray, protocol,net,session,globalShortcut, ipcMain  } from 'electron';
+import { Tray, protocol,net,session,globalShortcut, app, nativeImage  } from 'electron';
+import path from 'path';
 import  {pathToFileURL} from 'url';
 
 
@@ -29,8 +30,13 @@ export const createWindow = (): void => {
       const filePath = request.url.slice('atom://'.length)
       return net.fetch(pathToFileURL(filePath+'/1.mp3').toString())
     })
-
-    const tray = new Tray('static/icons/main.png')
+  // 获取应用程序的根目录  
+  const appRoot = app.getAppPath();  
+  // 构建托盘图标的路径  
+  const trayIconPath = path.join(appRoot, 'static', 'icons', 'main.png');  
+  // 创建托盘图标  
+  const trayIcon = nativeImage.createFromPath(trayIconPath);  
+    const tray = new Tray(trayIcon)
   
     tray.setToolTip('touch fish')
   
@@ -47,9 +53,6 @@ export const createWindow = (): void => {
     )
 
   globalShortcut.register('CommandOrControl+Shift+S', () => {
-    console.log('触发-----')
-    //触发事件让音频暂停播放
-    // ipcMain.
     mainWindow.webContents.send('toggle-player-pause');
     })
     //显示隐藏
@@ -57,8 +60,15 @@ export const createWindow = (): void => {
     console.log('触发-----')
     //触发事件让音频暂停播放
     // ipcMain.
-    mainWindow.webContents.send('toggle-player-pause');
+    mainWindow.webContents.send('back');
     })
+
+    globalShortcut.register('CommandOrControl+Shift+2', () => {
+      console.log('触发-----')
+      //触发事件让音频暂停播放
+      // ipcMain.
+      mainWindow.webContents.send('go');
+      })
     //切换窗口大小
   globalShortcut.register('CommandOrControl+Shift+0', () => {
       mainWindow.setBounds({

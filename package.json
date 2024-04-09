@@ -7,8 +7,8 @@
   "icon": "static/icons/main.png",
   "scripts": {
     "start": "electron-forge start",
-    "package": "dotenv -e .env.production electron-forge package",
-    "make": "dotenv -e .env.production electron-forge make",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },

@@ -1,4 +1,4 @@
-const { onTogglePlayerPause } = (window as any).electron
+const { onTogglePlayerPause, onBack, onGo } = (window as any).electron
 import { useContext, useRef, useState, useCallback, useEffect } from "react";
 import ReactDOM from 'react-dom'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
@@ -26,12 +26,22 @@ export default function player() {
                 playing: !reactPlayerProps.playing,
             })
         })
+
     }, [reactPlayerProps])
+    const [fifteenSecondsPlayed, setFifteenSecondsPlayed] = useState(0);
+    const [played, setPlayed] = useState(0)
+    useEffect(() => {
+        onBack('back', () => {
+            handleChangeFifteenSeconds(true)
+        })
+        onGo('go', () => {
+            handleChangeFifteenSeconds()
+        })
+    }, [fifteenSecondsPlayed, played, reactPlayerProps])
 
     // const  [canSetLocalPlayed,setCanSetLocalPlayed] = useState(false);
     const { audioLink, currentFileInfo, status } = useContext(GlobalContext);
 
-    const [fifteenSecondsPlayed, setFifteenSecondsPlayed] = useState(0);
     const [isMoveProgressIndicator, setIsMoveProgressIndicator] = useState(false);
     const [canSet, setCanSet] = useState(false);
     const [needReset, setNeedReset] = useState(false);
@@ -86,7 +96,6 @@ export default function player() {
     const [playedTime, setPlayedTime] = useState('00:00:00')
     const [totalTime, setTotalTime] = useState('00:00:00')
     const [secondsTime, setTotalSecondsTime] = useState(0)
-    const [played, setPlayed] = useState(0)
     const [lang, setLang] = useState('en')
 
     const progressIndicatorTotalRef = useRef<HTMLDivElement>()
