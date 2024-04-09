@@ -23,10 +23,10 @@ export default function () {
 			pubSub.unsubscribe(SUBTITLE_EVENT)
 		}
 	}, [subtitle])
-	return <div className=" text-sm" style={{
+	return <div className="text-xs" style={{
 		color: 'rgba(107,109,31)',
 	}}>
-		{subtitle?.enSubtitle?.length > 0 && lang !== 'cn' && <div className='w-full h-5 p-1 align-middle'>{textEn}</div>}
-		{subtitle?.cnSubtitle?.length > 0 && lang !== 'en' && <div className='w-full h-5 p-1 align-middle'>{textCn}</div>}
+		{subtitle?.enSubtitle?.length > 0 && lang !== 'cn' && <div className='text-sm w-full px-1 align-middle'>{textEn}</div>}
+		{subtitle?.cnSubtitle?.length > 0 && lang !== 'en' && <div className='w-full px-1 align-middle'>{textCn}</div>}
 	</div>
 }
